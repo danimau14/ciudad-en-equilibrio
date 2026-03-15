@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, jsonify
-import sqlite3, re, random
 import os
+import sqlite3, re, random
 
 app = Flask(__name__)
 app.secret_key = "ciudad2024"
