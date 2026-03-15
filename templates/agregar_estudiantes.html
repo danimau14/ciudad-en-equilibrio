@@ -36,12 +36,24 @@
             <h3>Estudiantes ({{ estudiantes|length }}/5):</h3>
             {% if estudiantes %}
             <ul class="estudiantes-lista">
-                % for est in estudiantes %}<li>👤 {{ est.nombre }}</li>{% endfor %}
+                {% for est in estudiantes %}
+                <li>
+                    👤 {{ est.nombre }}
+                    <form method="POST" action="{{ url_for('eliminar_estudiante', est_id=est.id) }}"
+                        style="display:inline;margin-left:.5rem"
+                        onsubmit="return confirm('¿Eliminar a {{ est.nombre }}?')">
+                    <button type="submit" style="background:rgba(239,68,68,.15);color:#f87171;
+                        border:1px solid rgba(239,68,68,.3);border-radius:.3rem;
+                        padding:.1rem .4rem;font-size:.75rem;cursor:pointer">✕</button>
+                    </form>
+                </li>
+                {% endfor %}
             </ul>
             {% else %}
             <p class="sin-estudiantes">Aun no hay estudiantes.</p>
             {% endif %}
         </div>
+
 
         <form method="POST" style="margin-top:1rem">
             <input type="hidden" name="accion" value="finalizar">
