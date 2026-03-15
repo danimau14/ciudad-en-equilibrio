@@ -1,0 +1,754 @@
+/* ============================================================
+   style.css - Ciudad en Equilibrio – Ingeniería Edition
+   Estilos organizados por secciones
+   ============================================================ */
+
+/* ---- Variables de color ---- */
+:root {
+    --color-primario: #2563eb;
+    --color-primario-hover: #1d4ed8;
+    --color-secundario: #16a34a;
+    --color-peligro: #dc2626;
+    --color-info: #0891b2;
+    --color-fondo: #0f172a;
+    --color-fondo-card: #1e293b;
+    --color-fondo-card2: #334155;
+    --color-texto: #f1f5f9;
+    --color-texto-suave: #94a3b8;
+    --color-borde: #475569;
+    --amarillo: #f59e0b;
+    --verde: #22c55e;
+    --rojo: #ef4444;
+    --azul-claro: #38bdf8;
+}
+
+/* ---- Reset y base ---- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    min-height: 100vh;
+}
+
+/* ============================================================
+   PANTALLA DE INICIO
+   ============================================================ */
+.pantalla-inicio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f2a1a 100%);
+}
+
+.inicio-container {
+    text-align: center;
+    padding: 2rem;
+    max-width: 500px;
+    width: 100%;
+}
+
+.titulo-iconos {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.5rem;
+}
+
+.inicio-container h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--color-texto);
+    text-shadow: 0 0 30px rgba(37, 99, 235, 0.5);
+}
+
+.subtitulo {
+    font-size: 1.1rem;
+    color: var(--amarillo);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.descripcion-inicio {
+    color: var(--color-texto-suave);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.botones-inicio {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+}
+
+.stats-inicio {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    background: var(--color-fondo-card);
+    border: 1px solid var(--color-borde);
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.85rem;
+    color: var(--color-texto-suave);
+}
+
+/* ============================================================
+   BOTONES
+   ============================================================ */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.6rem;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-primario {
+    background: var(--color-primario);
+    color: white;
+}
+.btn-primario:hover:not(:disabled) {
+    background: var(--color-primario-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+}
+
+.btn-secundario {
+    background: var(--color-secundario);
+    color: white;
+}
+.btn-secundario:hover:not(:disabled) {
+    background: #15803d;
+    transform: translateY(-1px);
+}
+
+.btn-info {
+    background: var(--color-info);
+    color: white;
+}
+.btn-info:hover:not(:disabled) {
+    background: #0e7490;
+}
+
+.btn-peligro {
+    background: var(--color-peligro);
+    color: white;
+}
+.btn-peligro:hover {
+    background: #b91c1c;
+}
+
+.btn-full {
+    width: 100%;
+    display: block;
+}
+
+/* ============================================================
+   FORMULARIOS (Registro, Login, Estudiantes)
+   ============================================================ */
+.pantalla-form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 1rem;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+.form-container {
+    background: var(--color-fondo-card);
+    border: 1px solid var(--color-borde);
+    border-radius: 1rem;
+    padding: 2rem;
+    width: 100%;
+    max-width: 440px;
+}
+
+.instrucciones-container {
+    max-width: 600px;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.form-header h2 {
+    font-size: 1.6rem;
+    margin-bottom: 0.4rem;
+}
+
+.form-header p {
+    color: var(--color-texto-suave);
+    font-size: 0.95rem;
+}
+
+.campo-form {
+    margin-bottom: 1.2rem;
+}
+
+.campo-form label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--color-texto-suave);
+}
+
+.campo-form input {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    background: var(--color-fondo-card2);
+    border: 1px solid var(--color-borde);
+    border-radius: 0.5rem;
+    color: var(--color-texto);
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.campo-form input:focus {
+    outline: none;
+    border-color: var(--color-primario);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+.campo-form small {
+    color: var(--color-texto-suave);
+    font-size: 0.78rem;
+    margin-top: 0.3rem;
+    display: block;
+}
+
+.form-footer {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--color-texto-suave);
+}
+
+.form-footer a {
+    color: var(--azul-claro);
+    text-decoration: none;
+}
+
+.link-volver {
+    display: block;
+    margin-top: 0.8rem;
+    color: var(--color-texto-suave) !important;
+    font-size: 0.85rem;
+}
+
+/* ---- Alertas ---- */
+.alerta {
+    padding: 0.8rem 1rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.alerta-error {
+    background: rgba(220, 38, 38, 0.15);
+    border: 1px solid var(--rojo);
+    color: #fca5a5;
+}
+
+.alerta-exito {
+    background: rgba(34, 197, 94, 0.15);
+    border: 1px solid var(--verde);
+    color: #86efac;
+}
+
+.alerta-info {
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid var(--azul-claro);
+    color: var(--azul-claro);
+}
+
+/* ---- Lista de estudiantes en registro ---- */
+.lista-estudiantes {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: var(--color-fondo-card2);
+    border-radius: 0.6rem;
+    border: 1px solid var(--color-borde);
+}
+
+.lista-estudiantes h3 {
+    font-size: 0.9rem;
+    color: var(--color-texto-suave);
+    margin-bottom: 0.8rem;
+}
+
+.estudiantes-lista {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.estudiantes-lista li {
+    padding: 0.4rem 0.8rem;
+    background: var(--color-fondo-card);
+    border-radius: 0.4rem;
+    font-size: 0.95rem;
+    border-left: 3px solid var(--verde);
+}
+
+.sin-estudiantes {
+    color: var(--color-texto-suave);
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+.regla-texto {
+    font-size: 0.8rem;
+    color: var(--amarillo);
+    margin-top: 0.3rem;
+}
+
+/* ---- Instrucciones ---- */
+.instruccion-bloque {
+    margin-bottom: 1.5rem;
+}
+
+.instruccion-bloque h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+    color: var(--azul-claro);
+}
+
+.instruccion-bloque ul,
+.instruccion-bloque ol {
+    padding-left: 1.5rem;
+    color: var(--color-texto-suave);
+    line-height: 2;
+}
+
+.instruccion-bloque strong {
+    color: var(--color-texto);
+}
+
+/* ============================================================
+   PANTALLA DEL JUEGO
+   ============================================================ */
+.pantalla-juego {
+    background: linear-gradient(180deg, #0f172a 0%, #1a1f35 100%);
+    min-height: 100vh;
+}
+
+/* ---- Header ---- */
+.juego-header {
+    background: var(--color-fondo-card);
+    border-bottom: 1px solid var(--color-borde);
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.nombre-grupo {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.estudiantes-lista-header {
+    font-size: 0.82rem;
+    color: var(--color-texto-suave);
+    margin-top: 0.2rem;
+}
+
+.estudiante-tag {
+    color: var(--azul-claro);
+    font-weight: 500;
+}
+
+.header-ronda {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.ronda-badge {
+    background: var(--color-primario);
+    padding: 0.3rem 0.9rem;
+    border-radius: 2rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.btn-config {
+    background: none;
+    border: 1px solid var(--color-borde);
+    color: var(--color-texto);
+    font-size: 1.3rem;
+    cursor: pointer;
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.4rem;
+    transition: background 0.2s;
+}
+
+.btn-config:hover {
+    background: var(--color-fondo-card2);
+}
+
+/* ---- Contenido principal del juego ---- */
+.juego-main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+/* ---- Barras de progreso ---- */
+.estado-ciudad {
+    background: var(--color-fondo-card);
+    border: 1px solid var(--color-borde);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.estado-ciudad h3 {
+    margin-bottom: 1.2rem;
+    font-size: 1.1rem;
+    color: var(--color-texto-suave);
+}
+
+.barras-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.barra-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.barra-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.barra-valor {
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.barra-fondo {
+    height: 22px;
+    background: var(--color-fondo-card2);
+    border-radius: 2rem;
+    overflow: hidden;
+    border: 1px solid var(--color-borde);
+}
+
+.barra-progreso {
+    height: 100%;
+    border-radius: 2rem;
+    transition: width 0.6s ease;
+    min-width: 2px;
+}
+
+.barra-economia   { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+.barra-ambiente   { background: linear-gradient(90deg, #16a34a, #4ade80); }
+.barra-energia    { background: linear-gradient(90deg, #2563eb, #60a5fa); }
+.barra-bienestar  { background: linear-gradient(90deg, #db2777, #f472b6); }
+
+/* ---- Decisiones ---- */
+.decisiones-section {
+    background: var(--color-fondo-card);
+    border: 1px solid var(--color-borde);
+    border-radius: 1rem;
+    padding: 1.5rem;
+}
+
+.decisiones-section h3 {
+    margin-bottom: 0.5rem;
+}
+
+.instruccion-decision {
+    color: var(--color-texto-suave);
+    font-size: 0.88rem;
+    margin-bottom: 1.2rem;
+}
+
+.decisiones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+}
+
+.decision-card {
+    background: var(--color-fondo-card2);
+    border: 2px solid var(--color-borde);
+    border-radius: 0.8rem;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.decision-card:hover {
+    border-color: var(--color-primario);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+}
+
+.decision-card.seleccionada {
+    border-color: var(--amarillo);
+    background: rgba(245, 158, 11, 0.1);
+}
+
+.decision-icono {
+    font-size: 2rem;
+    margin-bottom: 0.4rem;
+}
+
+.decision-nombre {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    line-height: 1.3;
+}
+
+.decision-efectos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    justify-content: center;
+}
+
+.efecto {
+    font-size: 0.78rem;
+    padding: 0.1rem 0.5rem;
+    border-radius: 1rem;
+    font-weight: 700;
+}
+
+.efecto.positivo { background: rgba(34, 197, 94, 0.2); color: var(--verde); }
+.efecto.negativo { background: rgba(239, 68, 68, 0.2);  color: var(--rojo); }
+.efecto.neutro   { background: rgba(148, 163, 184, 0.2); color: var(--color-texto-suave); }
+
+/* ============================================================
+   MODALES
+   ============================================================ */
+.modal-overlay, .config-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 1rem;
+    backdrop-filter: blur(4px);
+}
+
+.oculto { display: none !important; }
+
+.modal-box, .config-modal {
+    background: var(--color-fondo-card);
+    border: 1px solid var(--color-borde);
+    border-radius: 1rem;
+    padding: 2rem;
+    max-width: 480px;
+    width: 100%;
+    animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.modal-tema {
+    font-size: 0.8rem;
+    background: var(--color-primario);
+    color: white;
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: 1rem;
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+}
+
+.modal-pregunta-texto {
+    font-size: 1.05rem;
+    margin-bottom: 1.2rem;
+    line-height: 1.5;
+}
+
+.opciones-pregunta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+}
+
+.opcion-btn {
+    background: var(--color-fondo-card2);
+    border: 2px solid var(--color-borde);
+    color: var(--color-texto);
+    padding: 0.7rem 1rem;
+    border-radius: 0.6rem;
+    font-size: 0.95rem;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+}
+
+.opcion-btn:hover:not(:disabled) {
+    border-color: var(--color-primario);
+    background: rgba(37, 99, 235, 0.1);
+}
+
+.opcion-btn.correcta {
+    border-color: var(--verde);
+    background: rgba(34, 197, 94, 0.15);
+}
+
+.opcion-btn.incorrecta {
+    border-color: var(--rojo);
+    background: rgba(239, 68, 68, 0.15);
+}
+
+.msg-respuesta {
+    font-weight: 600;
+    font-size: 0.95rem;
+    min-height: 1.5rem;
+    text-align: center;
+}
+
+.efectos-resultado {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
+    justify-content: center;
+}
+
+.efecto-resultado-item {
+    font-size: 0.9rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+    font-weight: 700;
+}
+
+/* ============================================================
+   PANTALLA FINAL
+   ============================================================ */
+.pantalla-final {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 1rem;
+}
+
+.final-box {
+    background: var(--color-fondo-card);
+    border: 1px solid var(--color-borde);
+    border-radius: 1.5rem;
+    padding: 2.5rem;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+}
+
+.final-icono {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+.final-titulo {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 0.3rem;
+}
+
+.final-titulo.victoria { color: var(--amarillo); }
+.final-titulo.derrota  { color: var(--rojo); }
+
+.final-subtitulo {
+    font-size: 1.1rem;
+    color: var(--color-texto-suave);
+    margin-bottom: 1rem;
+}
+
+.puntajes-finales {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+}
+
+.puntaje-item {
+    background: var(--color-fondo-card2);
+    padding: 0.6rem 1rem;
+    border-radius: 0.6rem;
+    font-size: 0.9rem;
+    color: var(--color-texto-suave);
+}
+
+.puntaje-item strong {
+    color: var(--color-texto);
+}
+
+/* Configuración */
+.config-modal h3 {
+    margin-bottom: 1.2rem;
+    font-size: 1.2rem;
+}
+
+/*Agrega CSS para cartas bloqueadas*/
+.decision-card.bloqueada {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+    position: relative;
+}
+.cooldown-tag {
+    display: block;
+    font-size: 0.7rem;
+    color: #f87171;
+    margin-top: 0.3rem;
+    font-weight: 600;
+}
+
+
+

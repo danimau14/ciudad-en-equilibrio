@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Instrucciones – Ciudad en Equilibrio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="pantalla-form">
+    <div class="form-container instrucciones-container">
+        <h2>📖 Instrucciones del Juego</h2>
+
+        <div class="instruccion-bloque">
+            <h3>🎯 Objetivo</h3>
+            <p>Administrar una ciudad durante <strong>5 rondas</strong> manteniendo el equilibrio entre los 4 sistemas.</p>
+        </div>
+
+        <div class="instruccion-bloque">
+            <h3>⚖️ Sistemas de la Ciudad</h3>
+            <ul>
+                <li>💰 <strong>Economía</strong> – inicia en 50 puntos</li>
+                <li>🌿 <strong>Medio Ambiente</strong> – inicia en 50 puntos</li>
+                <li>⚡ <strong>Energía</strong> – inicia en 50 puntos</li>
+                <li>❤️ <strong>Bienestar Social</strong> – inicia en 50 puntos</li>
+            </ul>
+        </div>
+
+        <div class="instruccion-bloque">
+            <h3>🚨 Condiciones de fin</h3>
+            <ul>
+                <li>Si un sistema baja de <strong>20 puntos</strong> → La ciudad colapsa</li>
+                <li>Si completan las <strong>5 rondas</strong> → ¡Ganan!</li>
+            </ul>
+        </div>
+
+        <div class="instruccion-bloque">
+            <h3>🎮 ¿Cómo se juega?</h3>
+            <ol>
+                <li>En cada ronda eligen <strong>una decisión</strong> de la lista.</li>
+                <li>Antes de aplicarla deben responder una <strong>pregunta</strong>.</li>
+                <li>Si responden bien → se aplica la decisión.</li>
+                <li>Si responden mal → todos los sistemas pierden 5 puntos.</li>
+            </ol>
+        </div>
+
+        <a href="{{ url_for('index') }}" class="btn btn-primario" style="margin-top:1rem">← Volver al inicio</a>
+    </div>
+</body>
+</html>

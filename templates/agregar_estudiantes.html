@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Estudiantes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="pantalla-form">
+    <div class="form-container">
+        <div class="form-header">
+            <h2>👨‍🎓 Agregar Estudiantes</h2>
+            <p>Grupo: <strong>{{ nombre_grupo }}</strong></p>
+            <p class="regla-texto">Minimo 3 – Maximo 5 estudiantes</p>
+        </div>
+
+        {% if error %}<div class="alerta alerta-error">{{ error }}</div>{% endif %}
+        {% if mensaje %}<div class="alerta alerta-exito">{{ mensaje }}</div>{% endif %}
+
+        {% if estudiantes|length < 5 %}
+        <form method="POST">
+            <input type="hidden" name="accion" value="agregar">
+            <div class="campo-form">
+                <label>✏️ Nombre completo del estudiante</label>
+                <input type="text" name="nombre_estudiante" placeholder="Ej: Ana Maria Lopez"
+                       pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$"
+                       title="Solo letras y espacios" required autofocus>
+                <small>Solo letras y espacios (tildes y ñ permitidos)</small>
+            </div>
+            <button type="submit" class="btn btn-secundario btn-full">+ Agregar Estudiante</button>
+        </form>
+        {% else %}
+        <div class="alerta alerta-info">Maximo de 5 estudiantes alcanzado.</div>
+        {% endif %}
+
+        <div class="lista-estudiantes">
+            <h3>Estudiantes ({{ estudiantes|length }}/5):</h3>
+            {% if estudiantes %}
+            <ul class="estudiantes-lista">
+                {% for est in estudiantes %}<li>👤 {{ est }}</li>{% endfor %}
+            </ul>
+            {% else %}
+            <p class="sin-estudiantes">Aun no hay estudiantes.</p>
+            {% endif %}
+        </div>
+
+        <form method="POST" style="margin-top:1rem">
+            <input type="hidden" name="accion" value="finalizar">
+            <button type="submit" class="btn btn-primario btn-full"
+                {% if estudiantes|length < 3 %}disabled{% endif %}>
+                {% if estudiantes|length < 3 %}
+                    Faltan {{ 3 - estudiantes|length }} estudiante(s) mas
+                {% else %}
+                    ▶ Comenzar Juego ({{ estudiantes|length }} estudiantes)
+                {% endif %}
+            </button>
+        </form>
+
+        <form method="POST" action="{{ url_for('cancelar_registro') }}" style="margin-top:0.6rem"
+              onsubmit="return confirm('Seguro? Se cancelara el registro y se borrara el grupo.')">
+            <button type="submit" class="btn btn-peligro btn-full">
+                ✖ Cancelar y volver al inicio
+            </button>
+        </form>
+    </div>
+</body>
+</html>

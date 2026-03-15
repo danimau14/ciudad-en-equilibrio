@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Admin – Base de Datos</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<style>
+*{box-sizing:border-box}
+body{background:#0f172a;color:#f1f5f9;font-family:"Segoe UI",sans-serif;padding:2rem;margin:0}
+h1{color:#38bdf8;margin-bottom:.2rem;font-size:1.6rem}
+.sub{color:#64748b;font-size:.85rem;margin-bottom:2rem}
+.nav{display:flex;gap:1.5rem;margin-bottom:1.5rem}
+.nav a{color:#38bdf8;text-decoration:none;font-size:.88rem}
+.nav a:hover{text-decoration:underline}
+
+.btn-nuevo-grupo{
+  display:inline-flex;align-items:center;gap:.5rem;
+  background:rgba(34,197,94,.15);color:#4ade80;
+  border:1px solid rgba(34,197,94,.35);border-radius:.5rem;
+  padding:.5rem 1.3rem;font-size:.9rem;cursor:pointer;
+  text-decoration:none;margin-bottom:1.8rem;font-weight:600}
+.btn-nuevo-grupo:hover{background:rgba(34,197,94,.25)}
+
+.grupo-card{
+  background:#111827;border:1px solid #1e293b;
+  border-radius:.9rem;margin-bottom:1.4rem;overflow:hidden}
+.grupo-head{
+  background:#1e293b;padding:.85rem 1.2rem;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.6rem}
+.grupo-head-info .titulo{font-size:1.05rem;font-weight:700;color:#f1f5f9}
+.grupo-head-info .meta{font-size:.78rem;color:#94a3b8;margin-top:.12rem}
+.grupo-head-btns{display:flex;gap:.4rem;flex-wrap:wrap}
+.grupo-body{padding:1rem 1.2rem}
+
+.sec-row{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:.5rem;margin-top:.7rem}
+.sec-label{font-size:.72rem;font-weight:700;letter-spacing:.06em;
+           color:#64748b;text-transform:uppercase}
+
+.est-list{list-style:none;padding:0;margin:0}
+.est-item{
+  display:flex;align-items:center;justify-content:space-between;
+  background:#1a2744;border-radius:.45rem;padding:.38rem .75rem;
+  margin-bottom:.28rem;font-size:.87rem;color:#e2e8f0}
+.est-btns{display:flex;gap:.3rem}
+
+.prog-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-top:.5rem}
+.prog-box{background:#0f172a;border:1px solid #1e293b;border-radius:.45rem;
+          padding:.45rem .5rem;text-align:center}
+.prog-lbl{font-size:.68rem;color:#64748b;margin-bottom:.12rem}
+.prog-val{font-size:1.05rem;font-weight:700}
+.ok{color:#4ade80}.low{color:#f87171}
+.ronda{font-size:.75rem;color:#94a3b8;margin-top:.5rem}
+
+.btn{
+  display:inline-flex;align-items:center;gap:.25rem;
+  padding:.22rem .65rem;border-radius:.35rem;font-size:.77rem;
+  cursor:pointer;border:none;text-decoration:none;
+  white-space:nowrap;font-family:inherit}
+.btn:hover{opacity:.8}
+.be{background:rgba(59,130,246,.2);color:#60a5fa;border:1px solid rgba(59,130,246,.3)}
+.bd{background:rgba(239,68,68,.15);color:#f87171;border:1px solid rgba(239,68,68,.3)}
+.ba{background:rgba(34,197,94,.13);color:#4ade80;border:1px solid rgba(34,197,94,.3)}
+.vacio{color:#475569;font-size:.82rem;font-style:italic}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <a href="/">← Volver al inicio</a>
+  <a href="/ver_db">🔄 Recargar</a>
+</div>
+
+<h1>🗄️ Administración</h1>
+<p class="sub">Ciudad en Equilibrio — Base de datos</p>
+
+<a href="{{ url_for('db_nuevo_grupo') }}" class="btn-nuevo-grupo">➕ Crear nuevo grupo</a>
+
+{% for g in grupos %}
+  {% set mis_est = estudiantes | selectattr("grupo_id","equalto", g.id) | list %}
+  {% set mi_prog = progresos   | selectattr("grupo_id","equalto", g.id) | first | default(none) %}
+
+<div class="grupo-card">
+  <div class="grupo-head">
+    <div class="grupo-head-info">
+      <div class="titulo">👥 {{ g.nombre_grupo }}</div>
+      <div class="meta">
+        ID: {{ g.id }} &nbsp;·&nbsp;
+        🔑 Contraseña: <strong>{{ g.password }}</strong> &nbsp;·&nbsp;
+        {{ mis_est|length }}/5 estudiantes
+      </div>
+    </div>
+    <div class="grupo-head-btns">
+      <a href="{{ url_for('db_editar_grupo', gid=g.id) }}" class="btn be">✏️ Editar grupo</a>
+      <form method="POST" action="{{ url_for('db_eliminar_grupo', gid=g.id) }}" style="margin:0"
+            onsubmit="return confirm('¿Eliminar grupo {{ g.nombre_grupo }} y TODOS sus datos?')">
+        <button type="submit" class="btn bd">🗑️ Eliminar grupo</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="grupo-body">
+
+    <div class="sec-row">
+      <span class="sec-label">Estudiantes</span>
+      {% if mis_est|length < 5 %}
+      <a href="{{ url_for('db_agregar_estudiante') }}?grupo_id={{ g.id }}" class="btn ba">
+        ➕ Agregar estudiante
+      </a>
+      {% endif %}
+    </div>
+
+    {% if mis_est %}
+    <ul class="est-list">
+      {% for e in mis_est %}
+      <li class="est-item">
+        <span>👤 {{ e.nombre_estudiante }}</span>
+        <div class="est-btns">
+          <a href="{{ url_for('db_editar_estudiante', eid=e.id) }}" class="btn be">✏️ Editar</a>
+          <form method="POST" action="{{ url_for('db_eliminar_estudiante', eid=e.id) }}" style="margin:0"
+                onsubmit="return confirm('¿Eliminar a {{ e.nombre_estudiante }}?')">
+            <button type="submit" class="btn bd">🗑️</button>
+          </form>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="vacio">Sin estudiantes registrados.</p>
+    {% endif %}
+
+    <div class="sec-row" style="margin-top:1rem">
+      <span class="sec-label">Progreso del juego</span>
+    </div>
+
+    {% if mi_prog %}
+    <div class="prog-grid">
+      <div class="prog-box">
+        <div class="prog-lbl">💰 Economia</div>
+        <div class="prog-val {{ 'low' if mi_prog.economia <= 30 else 'ok' }}">{{ mi_prog.economia }}</div>
+      </div>
+      <div class="prog-box">
+        <div class="prog-lbl">🌿 Ambiente</div>
+        <div class="prog-val {{ 'low' if mi_prog.medio_ambiente <= 30 else 'ok' }}">{{ mi_prog.medio_ambiente }}</div>
+      </div>
+      <div class="prog-box">
+        <div class="prog-lbl">⚡ Energia</div>
+        <div class="prog-val {{ 'low' if mi_prog.energia <= 30 else 'ok' }}">{{ mi_prog.energia }}</div>
+      </div>
+      <div class="prog-box">
+        <div class="prog-lbl">❤️ Bienestar</div>
+        <div class="prog-val {{ 'low' if mi_prog.bienestar_social <= 30 else 'ok' }}">{{ mi_prog.bienestar_social }}</div>
+      </div>
+    </div>
+    <div class="ronda">Ronda actual: {{ mi_prog.ronda_actual }}/5</div>
+    {% else %}
+    <p class="vacio">Sin progreso iniciado.</p>
+    {% endif %}
+
+  </div>
+</div>
+{% else %}
+<p class="vacio">No hay grupos registrados. Crea el primero arriba.</p>
+{% endfor %}
+
+</body>
+</html>

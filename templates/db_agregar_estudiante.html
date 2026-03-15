@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"><title>Agregar Estudiante (Admin)</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>body{background:#0f172a;color:#f1f5f9;display:flex;justify-content:center;padding:3rem 1rem}</style>
+</head>
+<body>
+    <div class="form-container" style="max-width:480px;width:100%">
+        <h2 style="color:#38bdf8;margin-bottom:1.5rem">➕ Agregar Estudiante</h2>
+        {% if error %}<div class="alerta alerta-error">{{ error }}</div>{% endif %}
+        <form method="POST">
+            <div class="campo-form">
+                <label>Nombre del estudiante</label>
+                <input type="text" name="nombre_estudiante" placeholder="Ej: Ana Maria Lopez"
+                       required pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$" autofocus>
+                <small>Solo letras y espacios</small>
+            </div>
+            <div class="campo-form">
+                <label>Asignar al grupo</label>
+                <select name="grupo_id" style="width:100%;padding:.6rem;background:#1e293b;
+                        color:#f1f5f9;border:1px solid #334155;border-radius:.5rem" required>
+                    {% for g in grupos %}
+                    <option value="{{ g.id }}">{{ g.nombre_grupo }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primario btn-full">➕ Agregar Estudiante</button>
+        </form>
+        <a href="{{ url_for('ver_db') }}" class="btn btn-secundario btn-full" style="margin-top:.6rem;text-align:center;display:block">
+            ← Cancelar
+        </a>
+    </div>
+</body>
+</html>

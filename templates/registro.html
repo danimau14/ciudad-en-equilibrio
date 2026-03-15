@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Grupo – Ciudad en Equilibrio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="pantalla-form">
+    <div class="form-container">
+        <div class="form-header">
+            <h2>📝 Registrar Grupo</h2>
+            <p>Crea tu grupo para comenzar a jugar</p>
+        </div>
+
+        <!-- Mostrar error si existe -->
+        {% if error %}
+        <div class="alerta alerta-error">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('registro') }}">
+            <div class="campo-form">
+                <label for="nombre_grupo">👥 Nombre del Grupo</label>
+                <input
+                    type="text"
+                    id="nombre_grupo"
+                    name="nombre_grupo"
+                    placeholder="Ej: Equipo Titán"
+                    required
+                    maxlength="50"
+                >
+            </div>
+
+            <div class="campo-form">
+                <label for="password">🔒 Contraseña</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Contraseña del grupo"
+                    required
+                    minlength="4"
+                >
+            </div>
+
+            <button type="submit" class="btn btn-primario btn-full">
+                Crear Grupo →
+            </button>
+        </form>
+
+        <div class="form-footer">
+            <p>¿Ya tienes cuenta? <a href="{{ url_for('login') }}">Iniciar sesión</a></p>
+            <a href="{{ url_for('index') }}" class="link-volver">← Volver al inicio</a>
+        </div>
+    </div>
+</body>
+</html>

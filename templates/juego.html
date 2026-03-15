@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego – Ciudad en Equilibrio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="pantalla-juego">
+
+    <!-- HEADER -->
+    <header class="juego-header">
+        <div class="header-info">
+            <h2 class="nombre-grupo">🏙️ {{ nombre_grupo }}</h2>
+            <div class="estudiantes-lista-header">
+                {% for est in estudiantes %}
+                    <span class="estudiante-tag">{{ est }}</span>
+                    {% if not loop.last %} | {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="header-ronda">
+            <span class="ronda-badge">Ronda {{ progreso.ronda_actual }}/10</span>
+            <button class="btn-config" id="btnConfig" title="Configuración">⚙️</button>
+        </div>
+    </header>
+
+    <!-- MENÚ CONFIGURACIÓN -->
+    <div id="menuConfig" class="config-overlay oculto">
+        <div class="config-modal">
+            <h3>⚙️ Configuración</h3>
+            <button class="btn btn-peligro btn-full" id="btnVolverInicio">
+                🏠 Volver al menú principal
+            </button>
+            <button class="btn btn-secundario btn-full" id="btnCerrarConfig" style="margin-top:0.5rem">
+                Cancelar
+            </button>
+        </div>
+    </div>
+
+    <!-- CONFIRMACIÓN VOLVER -->
+    <div id="modalConfirmar" class="config-overlay oculto">
+        <div class="config-modal">
+            <h3>⚠️ ¿Deseas volver al menú principal?</h3>
+            <p>Tu progreso se guardará automáticamente.</p>
+            <div style="display:flex; gap:1rem; margin-top:1rem">
+                <a href="/" class="btn btn-peligro" style="flex:1; text-align:center">✅ Confirmar</a>
+                <button class="btn btn-secundario" id="btnCancelarVolver" style="flex:1">❌ Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="juego-main">
+
+        <!-- Barras de estado -->
+        <section class="estado-ciudad">
+            <h3>📊 Estado de la Ciudad</h3>
+            <div class="barras-container">
+
+                <div class="barra-item">
+                    <div class="barra-label">
+                        <span>💰 Economía</span>
+                        <span id="val-economia" class="barra-valor">{{ progreso.economia }}</span>
+                    </div>
+                    <div class="barra-fondo">
+                        <div class="barra-progreso barra-economia" id="bar-economia"
+                             style="width:{{ progreso.economia }}%"
+                             data-valor="{{ progreso.economia }}"></div>
+                    </div>
+                </div>
+
+                <div class="barra-item">
+                    <div class="barra-label">
+                        <span>🌿 Medio Ambiente</span>
+                        <span id="val-ambiente" class="barra-valor">{{ progreso.medio_ambiente }}</span>
+                    </div>
+                    <div class="barra-fondo">
+                        <div class="barra-progreso barra-ambiente" id="bar-ambiente"
+                             style="width:{{ progreso.medio_ambiente }}%"
+                             data-valor="{{ progreso.medio_ambiente }}"></div>
+                    </div>
+                </div>
+
+                <div class="barra-item">
+                    <div class="barra-label">
+                        <span>⚡ Energía</span>
+                        <span id="val-energia" class="barra-valor">{{ progreso.energia }}</span>
+                    </div>
+                    <div class="barra-fondo">
+                        <div class="barra-progreso barra-energia" id="bar-energia"
+                             style="width:{{ progreso.energia }}%"
+                             data-valor="{{ progreso.energia }}"></div>
+                    </div>
+                </div>
+
+                <div class="barra-item">
+                    <div class="barra-label">
+                        <span>❤️ Bienestar Social</span>
+                        <span id="val-bienestar" class="barra-valor">{{ progreso.bienestar_social }}</span>
+                    </div>
+                    <div class="barra-fondo">
+                        <div class="barra-progreso barra-bienestar" id="bar-bienestar"
+                             style="width:{{ progreso.bienestar_social }}%"
+                             data-valor="{{ progreso.bienestar_social }}"></div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- DECISIONES -->
+        {% if not juego_terminado %}
+        <section class="decisiones-section">
+            <h3>🗳️ Elige una decisión para esta ronda</h3>
+            <p class="instruccion-decision">Selecciona una opción. Luego responderás una pregunta para aplicarla.</p>
+            <div class="decisiones-grid" id="decisionesGrid">
+                {% for d in decisiones %}
+                <div class="decision-card" data-idx="{{ d.idx }}" onclick="seleccionarDecision({{ d.idx }})">
+                    <div class="decision-nombre">{{ d.nombre }}</div>
+                    <div class="decision-efectos">
+                        {% for sistema, valor in d.efectos.items() %}
+                        <span class="efecto {{ 'positivo' if valor > 0 else 'negativo' if valor < 0 else 'neutro' }}">
+                            {% if valor > 0 %}+{% endif %}{{ valor }}
+                            {% if sistema == 'economia' %}💰
+                            {% elif sistema == 'medio_ambiente' %}🌿
+                            {% elif sistema == 'energia' %}⚡
+                            {% elif sistema == 'bienestar_social' %}❤️
+                            {% endif %}
+                        </span>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+    </main>
+
+    <!-- MODAL: PREGUNTA -->
+<div id="modalPregunta" class="modal-overlay oculto">
+    <div class="modal-box" style="position:relative">
+        <!-- Botón cancelar pregunta -->
+        <button id="btnCancelarPregunta" title="Cambiar pregunta"
+                style="position:absolute;top:.6rem;right:.7rem;
+                       background:rgba(239,68,68,.15);color:#f87171;
+                       border:1px solid rgba(239,68,68,.3);border-radius:.4rem;
+                       padding:.2rem .55rem;font-size:.85rem;cursor:pointer;
+                       line-height:1">✕ Cambiar</button>
+
+        <div class="modal-tema" id="modalTema"></div>
+        <h3 id="modalPreguntaTexto" class="modal-pregunta-texto"></h3>
+        <div class="opciones-pregunta" id="opcionesPregunta"></div>
+        <p id="msgPregunta" class="msg-respuesta"></p>
+    </div>
+</div>
+
+    <!-- MODAL: RESULTADO RONDA -->
+    <div id="modalResultado" class="modal-overlay oculto">
+        <div class="modal-box">
+            <h3 id="resultadoTitulo"></h3>
+            <p id="resultadoMensaje"></p>
+            <div id="resultadoEfectos" class="efectos-resultado"></div>
+            <button class="btn btn-primario btn-full" id="btnSiguienteRonda">Continuar →</button>
+        </div>
+    </div>
+
+    <!-- PANTALLA FINAL -->
+    {% if juego_terminado %}
+    <div class="pantalla-final" id="pantallaFinal">
+        <div class="final-box">
+            {% if victoria %}
+            <div class="final-icono">🏆</div>
+            <h2 class="final-titulo victoria">Ciudad Equilibrada</h2>
+            <p class="final-subtitulo">¡Ganaste!</p>
+            <p>Lograron mantener todos los sistemas en equilibrio durante 5 rondas.</p>
+            {% else %}
+            <div class="final-icono">💥</div>
+            <h2 class="final-titulo derrota">La ciudad colapsó</h2>
+            <p class="final-subtitulo">{{ razon_fin }}</p>
+            <p>Un sistema llegó a niveles críticos. ¡Inténtalo de nuevo!</p>
+            {% endif %}
+
+            <div class="puntajes-finales">
+                <div class="puntaje-item">💰 Economía: <strong>{{ progreso.economia }}</strong></div>
+                <div class="puntaje-item">🌿 Ambiente: <strong>{{ progreso.medio_ambiente }}</strong></div>
+                <div class="puntaje-item">⚡ Energía: <strong>{{ progreso.energia }}</strong></div>
+                <div class="puntaje-item">❤️ Bienestar: <strong>{{ progreso.bienestar_social }}</strong></div>
+            </div>
+
+            <div style="display:flex; gap:1rem; margin-top:1.5rem">
+                <button class="btn btn-primario" id="btnReiniciar" style="flex:1">
+                    🔄 Reiniciar Juego
+                </button>
+                <a href="/" class="btn btn-secundario" style="flex:1; text-align:center">
+                    🏠 Volver al Inicio
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <script>
+        const DECISIONES      = {{ decisiones | tojson }};
+        const JUEGO_TERMINADO = {{ juego_terminado | tojson }};
+        const RONDA_ACTUAL    = {{ progreso.ronda_actual }};
+        const RONDA_MAX       = 10;
+        const COOLDOWNS       = {{ cooldowns | tojson }};
+    </script>
+    <script src="{{ url_for('static', filename='game.js') }}"></script>
+
+
+</body>
+</html>

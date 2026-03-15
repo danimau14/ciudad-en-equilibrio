@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"><title>Nuevo Grupo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>body{background:#0f172a;color:#f1f5f9;display:flex;justify-content:center;padding:3rem 1rem}</style>
+</head>
+<body>
+    <div class="form-container" style="max-width:480px;width:100%">
+        <h2 style="color:#38bdf8;margin-bottom:1.5rem">➕ Crear Nuevo Grupo</h2>
+        {% if error %}<div class="alerta alerta-error">{{ error }}</div>{% endif %}
+        <form method="POST">
+            <div class="campo-form">
+                <label>Nombre del grupo</label>
+                <input type="text" name="nombre_grupo" placeholder="Ej: Grupo Alpha" required autofocus>
+            </div>
+            <div class="campo-form">
+                <label>Contraseña</label>
+                <input type="text" name="password" placeholder="Ej: 1234" required>
+            </div>
+            <button type="submit" class="btn btn-primario btn-full">💾 Crear Grupo</button>
+        </form>
+        <a href="{{ url_for('ver_db') }}" class="btn btn-secundario btn-full"
+           style="margin-top:.6rem;text-align:center;display:block">← Cancelar</a>
+    </div>
+</body>
+</html>

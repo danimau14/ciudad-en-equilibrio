@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ciudad en Equilibrio – Ingeniería Edition</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="pantalla-inicio">
+    <div class="inicio-container">
+        <!-- Título principal del juego -->
+        <div class="titulo-juego">
+            <div class="titulo-iconos">🏙️ ⚖️ 🌿</div>
+            <h1>Ciudad en Equilibrio</h1>
+            <p class="subtitulo">Ingeniería Edition</p>
+            <p class="descripcion-inicio">Administra tu ciudad manteniendo el equilibrio entre economía, ambiente, energía y bienestar.</p>
+        </div>
+
+        <!-- Botones principales -->
+        <div class="botones-inicio">
+            <a href="{{ url_for('login') }}" class="btn btn-primario">
+                🔑 Iniciar Sesión
+            </a>
+            <a href="{{ url_for('registro') }}" class="btn btn-secundario">
+                📝 Registrar Grupo
+            </a>
+            <a href="{{ url_for('instrucciones') }}" class="btn btn-info">
+                📖 Instrucciones
+            </a>
+        </div>
+
+        <!-- Estadísticas decorativas -->
+        <div class="stats-inicio">
+            <div class="stat-item">⚙️ 5 Rondas</div>
+            <div class="stat-item">🎯 4 Sistemas</div>
+            <div class="stat-item">👥 3-5 Jugadores</div>
+        </div>
+    </div>
+</body>
+</html>
