@@ -36,7 +36,7 @@
             <h3>Estudiantes ({{ estudiantes|length }}/5):</h3>
             {% if estudiantes %}
             <ul class="estudiantes-lista">
-                {% for est in estudiantes %}<li>👤 {{ est }}</li>{% endfor %}
+                % for est in estudiantes %}<li>👤 {{ est.nombre }}</li>{% endfor %}
             </ul>
             {% else %}
             <p class="sin-estudiantes">Aun no hay estudiantes.</p>
