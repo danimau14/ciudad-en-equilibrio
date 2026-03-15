@@ -407,8 +407,7 @@ def api_aplicar_decision():
     conn = get_db(); c = conn.cursor()
     c.execute("SELECT * FROM progreso_juego WHERE grupo_id=?", (gid,))
     fila = c.fetchone()
-    if not fila:
-        conn.close(); return jsonify({"error": "Sin progreso"}), 400
+
     p = dict(fila)
     ronda_actual = p["ronda_actual"]
 
@@ -634,10 +633,11 @@ def db_agregar_estudiante():
 
 # ════════════════════════════════════════════════════════
 
-    # Inicializar DB al arrancar con gunicorn
+# Inicializar DB al arrancar con gunicorn
 with app.app_context():
     init_db()
 
 if __name__ == "__main__":
     app.run(debug=False, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+
 
