@@ -33,7 +33,8 @@ def init_db():
         FOREIGN KEY (grupo_id) REFERENCES grupos(id))""")
     conn.commit(); conn.close()
 
-init_db()
+if __name__ == "__main__" or os.environ.get("RENDER"):
+    init_db()
 
 PREGUNTAS = [
     # ── PYTHON ──────────────────────────────────────────────────────────────
@@ -633,7 +634,10 @@ def db_agregar_estudiante():
 
 # ════════════════════════════════════════════════════════
 
+    # Inicializar DB al arrancar con gunicorn
+with app.app_context():
+    init_db()
+
 if __name__ == "__main__":
-    print("Servidor en http://127.0.0.1:5000")
-    print("Admin DB:  http://127.0.0.1:5000/ver_db")
     app.run(debug=False, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+
